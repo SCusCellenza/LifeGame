@@ -20,6 +20,7 @@ namespace LifeGame
                 IsFinished = true;
                 return;
             }
+          
 
             Grid nextGrid = grid.NextState();
 
@@ -28,6 +29,11 @@ namespace LifeGame
                 IsFinished = true;
             }
             grid = nextGrid;
+        }
+
+        internal bool GridIsEmpty()
+        {
+            return grid.IsEmpty;
         }
     }
 }
