@@ -46,13 +46,23 @@ namespace LifeGame
             for(int i = 1; i <= X; i++)
                 for(int j = 1; j <= Y; j++)
                 {
-                    var newCell = new Cell(i, j);
-                    var nextCell = newCell.NextState(this.GetNumberOfNeighbours(i,j));
-                    if (nextCell != null)
-                        nextCells.Add(nextCell);
+                    //var newCell = new Cell(i, j);
+                    if (CellIsAliveAtThisPosition(i, j))
+                    {
+                        int numberOfNeighbours = this.GetNumberOfNeighbours(i, j);
+                        if (numberOfNeighbours == 3 || numberOfNeighbours == 2)
+                        {
+                            nextCells.Add(new Cell(i, j));
+                        }
+                    }
                 }
 
             return new Grid(X, Y, nextCells);
+        }
+
+        internal bool CellIsAliveAtThisPosition(int x, int y)
+        {
+            return Cells.Any(c => c.X == x && c.Y == y);
         }
 
         // TODO : to be tested with multiple tests --> delete everything and do it again

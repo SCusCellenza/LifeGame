@@ -47,5 +47,42 @@ namespace LifeGame
 
         }
 
+        [Fact]
+        public void WhenACellIsAliveAndHas2or3Neighbours_ItIsAliveNextRound()
+        {
+            int columnNumber = 2;
+            int lineNumber = 2;
+            var cell1 = new Cell(1, 1);
+            var cell2 = new Cell(1, 2);
+            var cell3 = new Cell(2, 1);
+
+            Grid grid = Grid.TryCreate(columnNumber, lineNumber, new List<Cell> { cell1, cell2, cell3 });
+
+            Grid gridNextState = grid.NextState();
+
+            Assert.True(gridNextState.CellIsAliveAtThisPosition(1, 1));
+            Assert.True(gridNextState.CellIsAliveAtThisPosition(1, 2));
+            Assert.True(gridNextState.CellIsAliveAtThisPosition(2, 1));
+
+        }
+
+        [Fact]
+        public void WhenACellIsAliveAndHasLessThan2Neighbours_ItIsDeadNextRound()
+        {
+            int columnNumber = 2;
+            int lineNumber = 2;
+            var cell1 = new Cell(1, 1);
+            var cell2 = new Cell(1, 2);
+
+            Grid grid = Grid.TryCreate(columnNumber, lineNumber, new List<Cell> { cell1, cell2 });
+
+            Grid gridNextState = grid.NextState();
+
+            Assert.False(gridNextState.CellIsAliveAtThisPosition(1, 1));
+            Assert.False(gridNextState.CellIsAliveAtThisPosition(1, 2));
+            Assert.False(gridNextState.CellIsAliveAtThisPosition(2, 1));
+            Assert.False(gridNextState.CellIsAliveAtThisPosition(2, 2));
+        }
+
     }
 }
