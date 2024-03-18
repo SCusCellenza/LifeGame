@@ -1,12 +1,12 @@
 namespace LifeGame
 {
-    public class UnitTest1
+    public class GameTest
     {
         [Fact]
-        public void GivenAnEmptyGrid_TheGameIsFinishedAfterThFirstRound()
+        public void GivenAnGridWithAllCellsDead_TheGameIsFinishedAfterThFirstRound()
         {
 
-            var grid = new Grid();
+            var grid = Grid.TryCreate(1, 1, new List<Cell> { });
             var game = new Game(grid);
 
             game.Run();
@@ -17,7 +17,7 @@ namespace LifeGame
         [Fact]
         public void GivenInitialState_ThenNotFinished()
         {
-            var grid = new Grid();
+            var grid = Grid.TryCreate(1, 1, new List<Cell> { });
             var game = new Game(grid);
 
             Assert.False(game.IsFinished);
@@ -28,7 +28,7 @@ namespace LifeGame
         public void GivenA1xA1GridWith1Cell_GameIsNotFinishedAfterOneRound()
         {
             var cell = new Cell(1,1);
-            var grid = new Grid(1, 1, new List<Cell> { cell });
+            var grid = Grid.TryCreate(1, 1, new List<Cell> { cell });
 
             var game = new Game(grid);
 
@@ -41,7 +41,7 @@ namespace LifeGame
         public void GivenA1xA1GridWithCell_GameIsFinishedAfterTwoRounds()
         {
             var cell = new Cell(1,1);
-            var grid = new Grid(1, 1, new List<Cell> { cell });
+            var grid = Grid.TryCreate(1, 1, new List<Cell> { cell });
 
             var game = new Game(grid);
 
@@ -51,32 +51,14 @@ namespace LifeGame
             Assert.True(game.IsFinished);
         }
 
-        [Fact]
-        public void GivenAGridWithoutLine_ExceptionIsThrown()
-        {
-            var cell = new Cell(1,1);
 
-            Assert.Throws<ArgumentException>(() =>
-                     new Grid(1, 0, new List<Cell> { cell })
-                 );
-        }
-
-        [Fact]
-        public void GivenAGridWithoutColumn_ExceptionIsThrown()
-        {
-            var cell = new Cell(1,1);
-
-            Assert.Throws<ArgumentException>(() =>
-                     new Grid(0, 1, new List<Cell> { cell })
-                 );
-        }
 
         [Fact]
         public void GivenA2xA2GridWith2Cells_GameIsFinishedAfterTwoRounds()
         {
             var cell1 = new Cell(1,1);
             var cell2 = new Cell(1,1);
-            var grid = new Grid(2, 2, new List<Cell> { cell1,cell2 });
+            var grid = Grid.TryCreate(2, 2, new List<Cell> { cell1,cell2 });
 
             var game = new Game(grid);
             game.Run();
@@ -91,7 +73,7 @@ namespace LifeGame
             var cell1 = new Cell(1,1);
             var cell2 = new Cell(1,2);
             var cell3 = new Cell(2,1);
-            var grid = new Grid(2, 2, new List<Cell> { cell1, cell2, cell3 });
+            var grid = Grid.TryCreate(2, 2, new List<Cell> { cell1, cell2, cell3 });
 
             var game = new Game(grid);
             game.Run();

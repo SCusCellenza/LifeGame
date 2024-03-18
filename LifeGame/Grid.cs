@@ -1,29 +1,34 @@
 ﻿
+using System.Collections.Generic;
+
 namespace LifeGame
 {
     internal class Grid
     {
-
-        public Grid()
-        {
-        }
-
-        public Grid(int x, int y, List<Cell> cells)
-        {
-            if (x == 0 || y == 0)
-            {
-                throw new ArgumentException();
-            }
-            X = x;
-            Y = y;
-            Cells = cells;
-        }
 
         public int X { get; }
         public int Y { get; }
         private List<Cell> Cells { get; }
 
         public bool IsEmpty => Cells == null || Cells.Count == 0;
+
+        private Grid(int x, int y, List<Cell> cells)
+        {
+            X = x;
+            Y = y;
+            Cells = cells;
+        }
+
+        // TO DO : implement the full try pattern with a bool and the out 
+        internal static Grid TryCreate(int columnNumber, int lineNumber, List<Cell> cells)
+        {
+            if (columnNumber <= 0 || lineNumber <= 0)
+            {
+                throw new ArgumentException();
+            }
+
+            return new Grid(columnNumber, lineNumber, cells);
+        }
 
         internal bool Compare(Grid grid)
         {
@@ -50,12 +55,7 @@ namespace LifeGame
             return new Grid(X, Y, nextCells);
         }
 
-        private int GetNumberOfNeighbours(Cell cell)
-        {
-            var cellCount = Cells.Count;
-            return cellCount != 0 ? cellCount - 1 : 0;
-        }
-
+        // TODO : to be tested with multiple tests --> delete everything and do it again
         private int GetNumberOfNeighbours(int x, int y)
         {
             var neighboursCount = 0;
@@ -69,7 +69,6 @@ namespace LifeGame
 
             return neighboursCount;
         }
-
 
     }
 }
