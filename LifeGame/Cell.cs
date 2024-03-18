@@ -13,6 +13,7 @@ namespace LifeGame
             Y = y;
         }
 
+        //TODO : refact : next state in not used anymore 
         internal Cell NextState(int numberOfNeighbours)
         {
 

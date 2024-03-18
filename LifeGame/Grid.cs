@@ -39,6 +39,8 @@ namespace LifeGame
             return false;
         }
 
+        //TODO : clean this
+
         internal Grid NextState()
         {
             List<Cell> nextCells = new List<Cell>();
@@ -46,7 +48,6 @@ namespace LifeGame
             for(int i = 1; i <= X; i++)
                 for(int j = 1; j <= Y; j++)
                 {
-                    //var newCell = new Cell(i, j);
                     if (CellIsAliveAtThisPosition(i, j))
                     {
                         int numberOfNeighbours = this.GetNumberOfNeighbours(i, j);
@@ -65,7 +66,6 @@ namespace LifeGame
             return Cells.Any(c => c.X == x && c.Y == y);
         }
 
-        // TODO : to be tested with multiple tests --> delete everything and do it again
         private int GetNumberOfNeighbours(int x, int y)
         {
             var neighboursCount = 0;
