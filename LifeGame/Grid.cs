@@ -51,10 +51,17 @@ namespace LifeGame
                     if (CellIsAliveAtThisPosition(columnCount, lineCount))
                     {
                         int numberOfNeighbours = this.GetNumberOfNeighbours(columnCount, lineCount);
+                        // Any live cell with two or three live neighbours survives
                         if (numberOfNeighbours == 3 || numberOfNeighbours == 2)
                         {
                             nextCells.Add(new Cell(columnCount, lineCount));
                         }
+                        //Any live cell with over three neighbours dies from overpopulation
+                        if (numberOfNeighbours > 3)
+                        {
+                            continue;
+                        }
+
                     }
                 }
 
