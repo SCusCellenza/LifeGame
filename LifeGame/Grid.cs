@@ -6,16 +6,16 @@ namespace LifeGame
     internal class Grid
     {
 
-        public int X { get; }
-        public int Y { get; }
+        public int NumberOfColumns { get; }
+        public int NumberOfLines { get; }
         private List<Cell> Cells { get; }
 
         public bool IsEmpty => Cells == null || Cells.Count == 0;
 
-        private Grid(int x, int y, List<Cell> cells)
+        private Grid(int numberOfColumns, int lines, List<Cell> cells)
         {
-            X = x;
-            Y = y;
+            NumberOfColumns = numberOfColumns;
+            NumberOfLines = lines;
             Cells = cells;
         }
 
@@ -45,35 +45,35 @@ namespace LifeGame
         {
             List<Cell> nextCells = new List<Cell>();
 
-            for(int i = 1; i <= X; i++)
-                for(int j = 1; j <= Y; j++)
+            for(int columnCount = 1; columnCount <= NumberOfColumns; columnCount++)
+                for(int lineCount = 1; lineCount <= NumberOfLines; lineCount++)
                 {
-                    if (CellIsAliveAtThisPosition(i, j))
+                    if (CellIsAliveAtThisPosition(columnCount, lineCount))
                     {
-                        int numberOfNeighbours = this.GetNumberOfNeighbours(i, j);
+                        int numberOfNeighbours = this.GetNumberOfNeighbours(columnCount, lineCount);
                         if (numberOfNeighbours == 3 || numberOfNeighbours == 2)
                         {
-                            nextCells.Add(new Cell(i, j));
+                            nextCells.Add(new Cell(columnCount, lineCount));
                         }
                     }
                 }
 
-            return new Grid(X, Y, nextCells);
+            return new Grid(NumberOfColumns, NumberOfLines, nextCells);
         }
 
-        internal bool CellIsAliveAtThisPosition(int x, int y)
+        internal bool CellIsAliveAtThisPosition(int columnPosition, int linePosition)
         {
-            return Cells.Any(c => c.X == x && c.Y == y);
+            return Cells.Any(c => c.X == columnPosition && c.Y == linePosition);
         }
 
-        private int GetNumberOfNeighbours(int x, int y)
+        private int GetNumberOfNeighbours(int columnPosition, int linePosition)
         {
             var neighboursCount = 0;
             foreach(Cell cell in Cells)
             {
-                if (cell.X < x - 1 || cell.X > x + 1) continue;
-                if (cell.Y < y - 1 || cell.Y > y + 1) continue;
-                if(cell.X == x && cell.Y == y) continue;
+                if (cell.X < columnPosition - 1 || cell.X > columnPosition + 1) continue;
+                if (cell.Y < linePosition - 1 || cell.Y > linePosition + 1) continue;
+                if(cell.X == columnPosition && cell.Y == linePosition) continue;
                 neighboursCount++;
             }
 

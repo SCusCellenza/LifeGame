@@ -41,8 +41,8 @@ namespace LifeGame
 
             Grid grid = Grid.TryCreate(columnNumber, lineNumber, new List<Cell> { cell });
 
-            Assert.Equal(columnNumber, grid.X);
-            Assert.Equal(lineNumber, grid.Y);
+            Assert.Equal(columnNumber, grid.NumberOfColumns);
+            Assert.Equal(lineNumber, grid.NumberOfLines);
             Assert.False(grid.IsEmpty);
 
         }
@@ -85,4 +85,6 @@ namespace LifeGame
         }
 
     }
+
+    
 }

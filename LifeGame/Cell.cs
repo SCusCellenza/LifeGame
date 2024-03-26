@@ -12,16 +12,5 @@ namespace LifeGame
             X = x;
             Y = y;
         }
-
-        //TODO : refact : next state in not used anymore 
-        internal Cell NextState(int numberOfNeighbours)
-        {
-
-            if (numberOfNeighbours == 3 || numberOfNeighbours == 2)
-            {
-                return new Cell(this.X, this.Y);
-            }
-            return null;
-        }
     }
 }
