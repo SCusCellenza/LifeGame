@@ -85,7 +85,7 @@ namespace LifeGame
         }
 
         [Fact]
-        public void WhenACellIsAliveAndHasMoreThan3Neighbours_ItIsDeadNextRound()
+        public void WhenACellIsAliveAndHasMoreThan3Neighbours_ItDiesFromOverpopulationNextRound()
         {
             int columnNumber = 2;
             int lineNumber = 3;
@@ -107,6 +107,24 @@ namespace LifeGame
 
         }
 
+        [Fact]
+        public void WhenACellIsDeadAndHas3Neighbours_ItComesAliveNextRound()
+        {
+            int columnNumber = 2;
+            int lineNumber = 2;
+            var cell1 = new Cell(1, 1);
+            var cell2 = new Cell(2, 1);
+            var cell3 = new Cell(1, 2);
+
+            Grid grid = Grid.TryCreate(columnNumber, lineNumber, new List<Cell> { cell1, cell2, cell3 });
+
+            Grid gridNextState = grid.NextState();
+
+            Assert.True(gridNextState.CellIsAliveAtThisPosition(cell1.ColumnPosition, cell1.LinePosition));
+            Assert.True(gridNextState.CellIsAliveAtThisPosition(cell2.ColumnPosition, cell2.LinePosition));
+            Assert.True(gridNextState.CellIsAliveAtThisPosition(cell3.ColumnPosition, cell3.LinePosition));
+            Assert.True(gridNextState.CellIsAliveAtThisPosition(2, 2));
+        }
     }
 
     

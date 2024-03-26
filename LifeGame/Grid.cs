@@ -48,9 +48,9 @@ namespace LifeGame
             for(int columnCount = 1; columnCount <= NumberOfColumns; columnCount++)
                 for(int lineCount = 1; lineCount <= NumberOfLines; lineCount++)
                 {
+                    int numberOfNeighbours = this.GetNumberOfNeighbours(columnCount, lineCount);
                     if (CellIsAliveAtThisPosition(columnCount, lineCount))
                     {
-                        int numberOfNeighbours = this.GetNumberOfNeighbours(columnCount, lineCount);
                         // Any live cell with two or three live neighbours survives
                         if (numberOfNeighbours == 3 || numberOfNeighbours == 2)
                         {
@@ -61,7 +61,14 @@ namespace LifeGame
                         {
                             continue;
                         }
-
+                    }
+                    else
+                    {
+                        //Any dead cell with exactly three live neighbours becomes a live cell
+                        if (numberOfNeighbours == 3)
+                        {
+                            nextCells.Add(new Cell(columnCount, lineCount));
+                        }
                     }
                 }
 
