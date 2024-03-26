@@ -125,6 +125,22 @@ namespace LifeGame
             Assert.True(gridNextState.CellIsAliveAtThisPosition(cell3.ColumnPosition, cell3.LinePosition));
             Assert.True(gridNextState.CellIsAliveAtThisPosition(2, 2));
         }
+
+        [Fact]
+        public void WhenACellIsAliveAndHasLessThan3Neighbours_ItDiesFromUnderpopulationNextRound()
+        {
+            int columnNumber = 2;
+            int lineNumber = 2;
+            var cell1 = new Cell(1, 1);
+            var cell2 = new Cell(2, 1);
+
+            Grid grid = Grid.TryCreate(columnNumber, lineNumber, new List<Cell> { cell1, cell2 });
+
+            Grid gridNextState = grid.NextState();
+
+            Assert.False(gridNextState.CellIsAliveAtThisPosition(cell1.ColumnPosition, cell1.LinePosition));
+            Assert.False(gridNextState.CellIsAliveAtThisPosition(cell2.ColumnPosition, cell2.LinePosition));
+        }
     }
 
     

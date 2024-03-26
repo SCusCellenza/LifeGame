@@ -51,21 +51,17 @@ namespace LifeGame
                     int numberOfNeighbours = this.GetNumberOfNeighbours(columnCount, lineCount);
                     if (CellIsAliveAtThisPosition(columnCount, lineCount))
                     {
-                        // Any live cell with two or three live neighbours survives
-                        if (numberOfNeighbours == 3 || numberOfNeighbours == 2)
+                        if (this.IsInOverPopulation(numberOfNeighbours) || this.IsInUnderPopulation(numberOfNeighbours)) continue;
+                        
+                        if (this.IsInSurvival(numberOfNeighbours))
                         {
                             nextCells.Add(new Cell(columnCount, lineCount));
                         }
-                        //Any live cell with over three neighbours dies from overpopulation
-                        if (numberOfNeighbours > 3)
-                        {
-                            continue;
-                        }
+
                     }
                     else
                     {
-                        //Any dead cell with exactly three live neighbours becomes a live cell
-                        if (numberOfNeighbours == 3)
+                        if (this.IsInReproduction(numberOfNeighbours))
                         {
                             nextCells.Add(new Cell(columnCount, lineCount));
                         }
@@ -73,6 +69,25 @@ namespace LifeGame
                 }
 
             return new Grid(NumberOfColumns, NumberOfLines, nextCells);
+        }
+
+        private bool IsInOverPopulation(int numberOfNeighbours)
+        {
+            return numberOfNeighbours > 3;
+        }
+
+        private bool IsInUnderPopulation(int numberOfNeighbours)
+        {
+            return numberOfNeighbours < 2;
+        }
+
+        private bool IsInSurvival(int numberOfNeighbours)
+        {
+            return numberOfNeighbours == 2 || numberOfNeighbours == 3;
+        }
+        private bool IsInReproduction(int numberOfNeighbours)
+        {
+            return numberOfNeighbours == 3;
         }
 
         internal bool CellIsAliveAtThisPosition(int columnPosition, int linePosition)
