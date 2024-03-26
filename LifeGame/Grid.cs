@@ -63,7 +63,7 @@ namespace LifeGame
 
         internal bool CellIsAliveAtThisPosition(int columnPosition, int linePosition)
         {
-            return Cells.Any(c => c.X == columnPosition && c.Y == linePosition);
+            return Cells.Any(c => c.ColumnPosition == columnPosition && c.LinePosition == linePosition);
         }
 
         private int GetNumberOfNeighbours(int columnPosition, int linePosition)
@@ -71,9 +71,9 @@ namespace LifeGame
             var neighboursCount = 0;
             foreach(Cell cell in Cells)
             {
-                if (cell.X < columnPosition - 1 || cell.X > columnPosition + 1) continue;
-                if (cell.Y < linePosition - 1 || cell.Y > linePosition + 1) continue;
-                if(cell.X == columnPosition && cell.Y == linePosition) continue;
+                if (cell.ColumnPosition < columnPosition - 1 || cell.ColumnPosition > columnPosition + 1) continue;
+                if (cell.LinePosition < linePosition - 1 || cell.LinePosition > linePosition + 1) continue;
+                if(cell.ColumnPosition == columnPosition && cell.LinePosition == linePosition) continue;
                 neighboursCount++;
             }
 

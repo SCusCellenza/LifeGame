@@ -3,14 +3,14 @@ namespace LifeGame
 {
     internal class Cell
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
+        public int ColumnPosition { get; private set; }
+        public int LinePosition { get; private set; }
 
 
-        public Cell(int x, int y)
+        public Cell(int columnPosition, int linePosition)
         {
-            X = x;
-            Y = y;
+            ColumnPosition = columnPosition;
+            LinePosition = linePosition;
         }
     }
 }
