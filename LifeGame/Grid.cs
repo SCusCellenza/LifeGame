@@ -51,13 +51,10 @@ namespace LifeGame
                     int numberOfNeighbours = this.GetNumberOfNeighbours(columnCount, lineCount);
                     if (CellIsAliveAtThisPosition(columnCount, lineCount))
                     {
-                        if (this.IsInOverPopulation(numberOfNeighbours) || this.IsInUnderPopulation(numberOfNeighbours)) continue;
-                        
                         if (this.IsInSurvival(numberOfNeighbours))
                         {
                             nextCells.Add(new Cell(columnCount, lineCount));
                         }
-
                     }
                     else
                     {
@@ -83,7 +80,7 @@ namespace LifeGame
 
         private bool IsInSurvival(int numberOfNeighbours)
         {
-            return numberOfNeighbours == 2 || numberOfNeighbours == 3;
+            return !(this.IsInOverPopulation(numberOfNeighbours) || this.IsInUnderPopulation(numberOfNeighbours));
         }
         private bool IsInReproduction(int numberOfNeighbours)
         {
