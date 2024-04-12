@@ -4,36 +4,30 @@ namespace LifeGame
     internal class Game
     {
 
-        private Grid grid;
+        private Grid _grid;
+        public bool IsFinished { get; private set; }
 
         public Game(Grid grid)
         {
-            this.grid = grid;
+            _grid = grid;
             IsFinished = false;
         }
 
-        public bool IsFinished { get; private set; }
+        //TODO : make this run until the grid is stable
         internal void Run()
         {
-            if (grid.IsEmpty)
-            {
-                IsFinished = true;
-                return;
-            }
-          
+            Grid nextGrid = _grid.NextState();
 
-            Grid nextGrid = grid.NextState();
-
-            if (grid.Compare(nextGrid))
+            if (_grid.Compare(nextGrid))
             {
                 IsFinished = true;
             }
-            grid = nextGrid;
+            _grid = nextGrid;
         }
 
         internal bool GridIsEmpty()
         {
-            return grid.IsEmpty;
+            return _grid.IsEmpty;
         }
     }
 }

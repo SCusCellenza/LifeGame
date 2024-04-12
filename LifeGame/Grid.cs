@@ -10,6 +10,7 @@ namespace LifeGame
         public int NumberOfLines { get; }
         private List<Cell> Cells { get; }
 
+        //should be a property ? and why public ? 
         public bool IsEmpty => Cells == null || Cells.Count == 0;
 
         private Grid(int numberOfColumns, int lines, List<Cell> cells)
@@ -30,6 +31,7 @@ namespace LifeGame
             return new Grid(columnNumber, lineNumber, cells);
         }
 
+        //Check implementation and add new tests to test an expected number of runs 
         internal bool Compare(Grid grid)
         {
             if (IsEmpty && grid.IsEmpty)
@@ -43,6 +45,9 @@ namespace LifeGame
 
         internal Grid NextState()
         {
+            if (IsEmpty)
+                return this;
+            
             List<Cell> nextCells = new List<Cell>();
 
             for(int columnCount = 1; columnCount <= NumberOfColumns; columnCount++)
@@ -50,7 +55,6 @@ namespace LifeGame
                 {
                     int numberOfNeighbours = this.GetNumberOfNeighbours(columnCount, lineCount);
 
-           
                     if (this.IsInSurvival(numberOfNeighbours, columnCount, lineCount))
                     {
                         nextCells.Add(new Cell(columnCount, lineCount));
