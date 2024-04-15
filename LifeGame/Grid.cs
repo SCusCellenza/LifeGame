@@ -32,16 +32,10 @@ namespace LifeGame
         }
 
         //Check implementation and add new tests to test an expected number of runs 
-        internal bool Compare(Grid grid)
+        internal bool AreGridsEqual(Grid grid)
         {
-            if (IsEmpty && grid.IsEmpty)
-                return true;
-            if (!IsEmpty && !grid.IsEmpty)
-                return true;
-            return false;
+            return this.Cells.Count() == grid.Cells.Count();
         }
-
-        //TODO : clean this
 
         internal Grid NextState()
         {

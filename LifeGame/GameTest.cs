@@ -1,3 +1,5 @@
+using Xunit;
+
 namespace LifeGame
 {
     public class GameTest
@@ -83,6 +85,41 @@ namespace LifeGame
 
         }
 
+
+        [Fact]
+        public void GivenABlockInA4x4Grid_GameIsFinishedAfterOneRound()
+        {
+            // Arrange
+            var cell1 = new Cell(2, 2);
+            var cell2 = new Cell(2, 3);
+            var cell3 = new Cell(3, 2);
+            var cell4 = new Cell(3, 3);
+            var grid = Grid.TryCreate(4, 4, new List<Cell> { cell1, cell2, cell3, cell4 });
+            var game = new Game(grid);
+
+            // Act
+            game.Run();
+
+            // Assert
+            Assert.True(game.IsFinished);
+        }
+
+        [Fact]
+        public void Given3CellsInA2x3Grid_GameIsNotFinishedAfterOneRound()
+        {
+            // Arrange
+            var cell1 = new Cell(1, 1);
+            var cell2 = new Cell(2, 2);
+            var cell3 = new Cell(1, 3);
+            var grid = Grid.TryCreate(2, 3, new List<Cell> { cell1, cell2, cell3 });
+            var game = new Game(grid);
+
+            // Act
+            game.Run();
+
+            // Assert
+            Assert.False(game.IsFinished);
+        }
 
     }
 }

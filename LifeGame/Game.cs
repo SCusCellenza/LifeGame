@@ -13,12 +13,12 @@ namespace LifeGame
             IsFinished = false;
         }
 
-        //TODO : make this run until the grid is stable
+        //TODO : make this run until the grid is stable : implement oscillators and gliders to test https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
         internal void Run()
         {
             Grid nextGrid = _grid.NextState();
 
-            if (_grid.Compare(nextGrid))
+            if (_grid.AreGridsEqual(nextGrid))
             {
                 IsFinished = true;
             }
