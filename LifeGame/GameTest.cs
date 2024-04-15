@@ -121,5 +121,26 @@ namespace LifeGame
             Assert.False(game.IsFinished);
         }
 
+
+        [Fact]
+        public void Given6CellsInA4x3Grid_GameIsNotFinishedAfterOneRound()
+        {
+            // Arrange
+            var cell1 = new Cell(2, 1);
+            var cell2 = new Cell(3, 1);
+            var cell3 = new Cell(2, 2);
+            var cell4 = new Cell(3, 2);
+            var cell5 = new Cell(2, 3);
+            var cell6 = new Cell(3, 3);
+            var grid = Grid.TryCreate(4, 3, new List<Cell> { cell1, cell2, cell3, cell4, cell5, cell6 });
+            var game = new Game(grid);
+
+            // Act
+            game.Run();
+
+            // Assert
+            Assert.False(game.IsFinished);
+
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace LifeGame
 
         public int NumberOfColumns { get; }
         public int NumberOfLines { get; }
+        //To do : Replace List by table
         private List<Cell> Cells { get; }
 
         //should be a property ? and why public ? 
@@ -31,10 +32,23 @@ namespace LifeGame
             return new Grid(columnNumber, lineNumber, cells);
         }
 
-        //Check implementation and add new tests to test an expected number of runs 
-        internal bool AreGridsEqual(Grid grid)
+        internal bool IsEqual(Grid grid)
         {
-            return this.Cells.Count() == grid.Cells.Count();
+            if (!(this.Cells.Count() == grid.Cells.Count()))
+                return false;
+
+            foreach (Cell cell in Cells)
+            {
+                if (!grid.CellIsAliveAtThisPosition(cell.ColumnPosition, cell.LinePosition))
+                    return false;
+            }
+            foreach (Cell cell in grid.Cells)
+            {
+                if (!this.CellIsAliveAtThisPosition(cell.ColumnPosition, cell.LinePosition))
+                    return false;
+            }
+
+            return true;
         }
 
         internal Grid NextState()

@@ -18,7 +18,7 @@ namespace LifeGame
         {
             Grid nextGrid = _grid.NextState();
 
-            if (_grid.AreGridsEqual(nextGrid))
+            if (_grid.IsEqual(nextGrid))
             {
                 IsFinished = true;
             }
