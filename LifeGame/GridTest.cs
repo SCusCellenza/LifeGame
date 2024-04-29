@@ -1,5 +1,7 @@
 ﻿
 
+using Xunit;
+
 namespace LifeGame
 {
     public class GridTest
@@ -142,6 +144,5 @@ namespace LifeGame
             Assert.False(gridNextState.CellIsAliveAtThisPosition(cell2.ColumnPosition, cell2.LinePosition));
         }
     }
-
     
 }

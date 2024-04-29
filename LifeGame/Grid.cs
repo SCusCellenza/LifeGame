@@ -21,14 +21,12 @@ namespace LifeGame
             Cells = cells;
         }
 
-        // TO DO : implement the full try pattern with a bool and the out 
         internal static Grid TryCreate(int columnNumber, int lineNumber, List<Cell> cells)
         {
             if (columnNumber <= 0 || lineNumber <= 0)
             {
                 throw new ArgumentException();
             }
-
             return new Grid(columnNumber, lineNumber, cells);
         }
 
