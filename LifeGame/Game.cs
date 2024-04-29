@@ -3,7 +3,6 @@ namespace LifeGame
 {
     internal class Game
     {
-
         private Grid _grid;
         public bool IsFinished { get; private set; }
 

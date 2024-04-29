@@ -8,17 +8,21 @@ namespace LifeGame
 
         public int NumberOfColumns { get; }
         public int NumberOfLines { get; }
-        //To do : Replace List by table
-        private List<Cell> Cells { get; }
+        // TO DO : do a benchmark to see if it's better to have a a list or a 2D array
+        private Cell[,] Cells { get; }
 
         //should be a property ? and why public ? 
-        public bool IsEmpty => Cells == null || Cells.Count == 0;
+        public bool IsEmpty => Cells == null || Cells.Cast<Cell>().Count(cell => cell != null) == 0;
 
-        private Grid(int numberOfColumns, int lines, List<Cell> cells)
+        private Grid(int numberOfColumns, int numberOfLines, List<Cell> cells)
         {
             NumberOfColumns = numberOfColumns;
-            NumberOfLines = lines;
-            Cells = cells;
+            NumberOfLines = numberOfLines;
+            Cells = new Cell [numberOfColumns, numberOfLines];
+            foreach (Cell cell in cells)
+            {
+                Cells[cell.ColumnPosition - 1, cell.LinePosition - 1] = cell;
+            }
         }
 
         internal static Grid TryCreate(int columnNumber, int lineNumber, List<Cell> cells)
@@ -32,20 +36,18 @@ namespace LifeGame
 
         internal bool IsEqual(Grid grid)
         {
-            if (!(this.Cells.Count() == grid.Cells.Count()))
-                return false;
-
-            foreach (Cell cell in Cells)
+            for (int i = 0; i < NumberOfColumns; i++)
             {
-                if (!grid.CellIsAliveAtThisPosition(cell.ColumnPosition, cell.LinePosition))
-                    return false;
+                for (int j = 0; j < NumberOfLines; j++)
+                {
+                    //TO DO : refactor ?
+                    if (this.Cells[i, j] == null && grid.Cells[i, j] != null 
+                        || this.Cells[i, j] != null && grid.Cells[i, j] == null)
+                    {
+                        return false;
+                    }
+                }
             }
-            foreach (Cell cell in grid.Cells)
-            {
-                if (!this.CellIsAliveAtThisPosition(cell.ColumnPosition, cell.LinePosition))
-                    return false;
-            }
-
             return true;
         }
 
@@ -101,7 +103,7 @@ namespace LifeGame
 
         internal bool CellIsAliveAtThisPosition(int columnPosition, int linePosition)
         {
-            return Cells.Any(c => c.ColumnPosition == columnPosition && c.LinePosition == linePosition);
+            return Cells[columnPosition -1, linePosition - 1] != null;
         }
 
         private int GetNumberOfNeighbours(int columnPosition, int linePosition)
@@ -109,6 +111,7 @@ namespace LifeGame
             var neighboursCount = 0;
             foreach(Cell cell in Cells)
             {
+                if (cell == null) continue;
                 if (cell.ColumnPosition < columnPosition - 1 || cell.ColumnPosition > columnPosition + 1) continue;
                 if (cell.LinePosition < linePosition - 1 || cell.LinePosition > linePosition + 1) continue;
                 if(cell.ColumnPosition == columnPosition && cell.LinePosition == linePosition) continue;
